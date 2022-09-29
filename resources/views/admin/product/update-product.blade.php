@@ -83,17 +83,7 @@
                                         </div>
 
                                    
-                                        <!-- <div class="row ">
-                                            <div class="col-md-6 col-xs-6 amt">
-                                                        <div class="form-group">
-                                                            <label>Amount :<span style="color:red"> *</span></label>
-                                                            <input type="number" name="p_amt" id="p_amt" class="form-control" placeholder="Amount" value="{{ old('p_amt') }}" >
-                                                            @if ($errors->has('p_amt'))
-                                                                                    <span class="text-danger">{{ $errors->first('p_amt') }}</span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                        </div> -->
+                                    
                                     
 
                                         <div class="row rope-chan">
@@ -110,7 +100,6 @@
                                             <div class="row rope-chan" id="deleterope{{$item->id}}">
                                                 <div class="col-md-2 col-xs-12">
                                                     <div class="form-group">
-                                                        <label>Rope Chain :<span style="color:red"> *</span></label>
                                                         <input type="hidden" name="rope_id[]" id="rope_id" value="{{ $item->id }}" >
                                                         <input type="text" name="ropeChain[]" id="ropeChain1" class="form-control" placeholder="0.68 Mm Thickness 18 Inch" value="{{ $item->name }}" />
                                                         @if ($errors->has('ropeChain'))
@@ -119,57 +108,63 @@
                                                     
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-2 col-xs-12">
+                                                 <div class="form-group">
+                                                  <input type="text" name="carat[]" id="carat" class="form-control" placeholder="Ex 14k" value="{{ $item -> carat != 'N/A'?$item -> carat:'' }}"  />                                     
+                                                </div>
+                                                </div>
+                                                <div class="col-md-1 col-xs-12">
                                                     <div class="form-group">
-                                                        <label>Amount :<span style="color:red"> *</span></label>
                                                         <input type="text" name="amount[]" id="amount1" class="form-control" placeholder="Amount" value="{{ $item->amount }}" onkeyup="getdiscountprice(1)" />
                                                         @if ($errors->has('amount'))
-                                                                            <span class="text-danger">{{ $errors->first('amount') }}</span>
-                                                        @endif
-                                                    
-
-
+                                                        <span class="text-danger">{{ $errors->first('amount') }}</span>
+                                                        @endif                                                  
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-2 col-xs-12">
+                                                <div class="col-md-1 col-xs-12">
                                                     <div class="form-group">
-                                                        <label>Color :<span style="color:red"> *</span></label>
                                                         <input type="text" name="gold_color[]" id="gold_color1" class="form-control" placeholder="Color" value="{{ $item->gold_color }}" />   
                                                         @if ($errors->has('gold_color'))
-                                                                            <span class="text-danger">{{ $errors->first('gold_color') }}</span>
+                                                        <span class="text-danger">{{ $errors->first('gold_color') }}</span>
                                                     @endif    
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-2 col-xs-12">
+                                                <div class="col-md-1 col-xs-12">
                                                     <div class="form-group">
-                                                        <label>Discount% :<span style="color:red"> *</span></label>
                                                         <input type="num" name="discount_percentage[]" id="discount_percentage1" class="form-control" placeholder="Discount Percentage" value="{{ $item->discount_percentage}}" onkeyup="getdiscountprice(1)" /> 
                                                         @if ($errors->has('discount_percentage'))
-                                                                            <span class="text-danger">{{ $errors->first('discount_percentage') }}</span>
+                                                        <span class="text-danger">{{ $errors->first('discount_percentage') }}</span>
                                                     @endif
                                                         
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-2 col-xs-12">
+                                                <div class="col-md-1 col-xs-12">
                                                     <div class="form-group">
-                                                        <label>Final Price :<span style="color:red"> *</span></label>
                                                         <input type="num" name="final_price[]" id="final_price1" class="form-control" placeholder="Final Price" value="{{ $item->final_price }}" /> 
                                                         <input type="hidden" name="discount_amt[]" id="discount_amt1" class="form-control" placeholder="Final Price" value="{{ $item->discount_amt }}" /> 
                                                         @if ($errors->has('final_price'))
-                                                                            <span class="text-danger">{{ $errors->first('final_price') }}</span>
+                                                        <span class="text-danger">{{ $errors->first('final_price') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2 col-xs-12">
-                                                <div class="form-group">
-                                                
-                                                <span class="btn btn-primary m-b-5 ml-2 py-2 amt" id="addrow"  style="float: left;"><i class="fa fa-plus"
-                                                        aria-hidden="true"></i></span>
+                                                        <div class="form-group">
+                                                            <input type="file" name="otherimage[]" id="otherimage" class="form-control"/>                                       
+                                                        </div>
+                                                </div>
+                                              
+
+                                                <div class="col-md-2 col-xs-12">
+                                                        <div class="fv-plugins-message-container d-inline-block">
+                                                                <a class="btn btn-danger m-b-5 ml-2 py-2"  onclick="deleterope({{$item->id}})"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                                            </div>
                                                 </div> 
+
                                             </div>
                                         
                                                                             
@@ -179,7 +174,7 @@
                                             <div class="row rope-chan amt" id="deleterope{{$item->id}}">
                                                     <div class="col-md-2 col-xs-12">
                                                         <div class="form-group">
-                                                            <label>Rope Chain :<span style="color:red"> *</span></label>
+                                                            <label>Variation :<span style="color:red"> *</span></label>
                                                             <input type="hidden" name="rope_id[]" id="rope_id" value="{{ $item->id }}" >
                                                             <input type="text" name="ropeChain[]" id="ropeChain{{$item->id}}" class="form-control" placeholder="0.68 Mm Thickness 18 Inch" value="{{ $item->name }}" />
                                                             @if ($errors->has('ropeChain'))
@@ -189,19 +184,22 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2 col-xs-12">
+                                                 <div class="form-group">
+                                                  <label>Size</label>
+                                                  <input type="text" name="carat[]" id="carat" class="form-control" placeholder="Ex 14k" value="{{ $item -> carat != 'N/A'?$item -> carat:'' }}"  />                                     
+                                                </div>
+                                                </div>
+                                                    <div class="col-md-1 col-xs-12">
                                                         <div class="form-group">
                                                             <label>Amount :<span style="color:red"> *</span></label>
                                                             <input type="text" name="amount[]" id="amount{{$item->id}}" class="form-control" placeholder="Amount" value="{{ $item->amount }}" onkeyup="getdiscountprice({{$item->id}})" />
                                                             @if ($errors->has('amount'))
-                                                                                <span class="text-danger">{{ $errors->first('amount') }}</span>
-                                                            @endif
-                                                        
-
-
+                                                            <span class="text-danger">{{ $errors->first('amount') }}</span>
+                                                            @endif                                                     
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-2 col-xs-12">
+                                                    <div class="col-md-1 col-xs-12">
                                                         <div class="form-group">
                                                             <label>Color :<span style="color:red"> *</span></label>
                                                             <input type="text" name="gold_color[]" id="gold_color{{$item->id}}" class="form-control" placeholder="Color" value="{{ $item->gold_color }}" />   
@@ -211,7 +209,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-2 col-xs-12">
+                                                    <div class="col-md-1 col-xs-12">
                                                         <div class="form-group">
                                                             <label>Discount% :<span style="color:red"> *</span></label>
                                                             <input type="num" name="discount_percentage[]" id="discount_percentage{{$item->id}}" class="form-control" placeholder="Final Price" value="{{ $item->discount_percentage}}" onkeyup="getdiscountprice({{$item->id}})" /> 
@@ -222,22 +220,31 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-2 col-xs-12">
+                                                    <div class="col-md-1 col-xs-12">
                                                         <div class="form-group">
                                                             <label>Final Price :<span style="color:red"> *</span></label>
                                                             <input type="num" name="final_price[]" id="final_price{{$item->id}}" class="form-control" placeholder="Final Price" value="{{ $item->final_price }}" /> 
                                                             <input type="hidden" name="discount_amt[]" id="discount_amt{{$item->id}}" class="form-control" placeholder="Final Price" value="{{ $item->discount_amt }}" /> 
                                                             @if ($errors->has('final_price'))
-                                                                                <span class="text-danger">{{ $errors->first('final_price') }}</span>
+                                                            <span class="text-danger">{{ $errors->first('final_price') }}</span>
                                                             @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-2 col-xs-12">
+                                                        <div class="form-group">
+                                                         <label>Image</label>
+                                                            <input type="file" name="otherimage[]" id="otherimage" class="form-control"/>                                       
                                                         </div>
                                                     </div>
                                             
                                                     <div class="col-md-2 col-xs-12">
-                                                        <div class="fv-plugins-message-container d-inline-block">
-                                                                <a class="btn btn-danger m-b-5 ml-2 py-2"  onclick="deleterope({{$item->id}})"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                            </div>
-                                                    </div>                                 
+                                                <div class="form-group">
+                                                
+                                                <span class="btn btn-primary m-b-5 ml-2 py-2 amt" id="addrow"  style="float: left;"><i class="fa fa-plus"
+                                                        aria-hidden="true"></i></span>
+                                                </div> 
+                                                                                  
                                                 </div> 
                                             @endif    
                                         
@@ -246,8 +253,7 @@
                            
                               
                           
-                            <span id="multipleimage"></span>
-                           
+                            <span id="multipleimage"></span>                           
                             <div class="row">
                                 <div class="col-md-12 col-xs-12">
                                     <div class="form-group">
@@ -280,41 +286,15 @@
                                         <label>Image1 :<span style="color:red"> *</span></label>
                                         <input type="file" name="image" id="image" class="form-control"  />
                                         @if ($errors->has('image'))
-                                                                <span class="text-danger">{{ $errors->first('image') }}</span>
+                                        <span class="text-danger">{{ $errors->first('image') }}</span>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-xs-6">
-                                    <div class="form-group">
-                                        <label>Image2 :</label>
-                                        <input type="file" name="image1" id="image1" class="form-control"  />
-                                        
-                                    </div>
-                                </div>
-                            </div>
-
-                           
-
-                            <div class="row">
-                                <div class="col-md-6 col-xs-6">
-                                    <div class="form-group">
-                                        <label>Image3 :</label>
-                                        <input type="file" name="image2" id="image2" class="form-control"  />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-xs-6">
-                                    <div class="form-group">
-                                        <label>Image4 :</label>
-                                        <input type="file" name="image3" id="image3" class="form-control"  />
-                                    </div>
-                                </div>
-                            </div>
-
-                           
+                            </div>                                               
 
                             <div class="row" >
-                                <div class="col-md-12 col-xs-6">
+                                <div class="col-md-6 col-xs-6">
                                     <div class="form-group">
                                         <label>Video :</label>
                                         <input type="file" name="image4" id="image4" class="form-control" />
@@ -356,8 +336,7 @@ $(document).ready(function () {
 
                 let lineNo = 2;
                 $("#addrow").click(function () {
-                   
-                    markup = '<div class="row"   id="deleterow'+ lineNo +'"><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="ropeChain[]" id="ropeChain'+ lineNo +'"  placeholder="0.68 Mm Thickness 18 Inch" style="width: 100%;"></div></div><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="amount[]" id="amount'+ lineNo +'"  placeholder="Amount" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="gold_color[]" id="gold_color'+ lineNo +'"  placeholder="Color" style="width: 100%;"></div></div><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="discount_percentage[]" id="discount_percentage'+ lineNo +'"  placeholder="Discount Percentage" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="final_price[]" id="final_price'+ lineNo +'"  placeholder="Final Price" style="width: 100%;" ><input type="hidden" name="discount_amt[]" id="discount_amt'+lineNo+'" class="form-control"  /> </div></div> <div class="fv-plugins-message-container d-inline-block"> <button class="btn btn-danger m-b-5 ml-2 py-2"  onclick="deleteRow('+ lineNo +')"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div></div>' ;
+                    markup = '<div class="row"   id="deleterow'+ lineNo +'"><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="ropeChain[]" id="ropeChain'+ lineNo +'"  placeholder="0.68 Mm Thickness 18 Inch" style="width: 100%;"></div></div><div class="col-md-2 col-xs-12"><div class="form-group"><input type="text" name="carat[]" id="carat'+ lineNo +'" class="form-control" placeholder="Ex 14k"  /></div></div><div class="col-md-1 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="amount[]" id="amount'+ lineNo +'"  placeholder="Amount" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-1 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="gold_color[]" id="gold_color'+ lineNo +'"  placeholder="Color" style="width: 100%;"></div></div> <div class="col-md-1 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="discount_percentage[]" id="discount_percentage'+ lineNo +'"  placeholder="Discount Percentage" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-1 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="final_price[]" id="final_price'+ lineNo +'"  placeholder="Final Price" style="width: 100%;" ><input type="hidden" name="discount_amt[]" id="discount_amt'+lineNo+'" class="form-control"  /> </div></div><div class="col-md-2 col-xs-12"><div class="form-group"><input type="file" name="otherimage[]" id="otherimage" class="form-control"/></div></div><div class="fv-plugins-message-container d-inline-block"> <button class="btn btn-danger m-b-5 ml-2 py-2"  onclick="deleteRow('+ lineNo +')"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div></div>' ;
                     tableBody = $("#multipleimage");
                    // alert(tableBody);
                     tableBody.append(markup);

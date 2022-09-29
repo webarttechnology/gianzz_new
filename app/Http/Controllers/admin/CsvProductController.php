@@ -82,6 +82,7 @@ class CsvProductController extends Controller
                     $insertStatus=false;
         
                     // Insert to MySQL database
+                
                     foreach($importData_arr as $importData){
                       
                             $title = $importData[1];
@@ -90,34 +91,32 @@ class CsvProductController extends Controller
                             $categary = $importData[4];
                             $skuCode = explode('-',$importData[5]);
                             $variationName = $importData[6];
-                            $color = $importData[7];
+                            $carat = $importData[7];
+                            $color = $importData[9];
                             $amount = $importData[10];
-                            $slug = Str::slug($importData[1], '-');                            
-                          
-                           
-
+                            $slug = Str::slug($importData[1], '-');   
                                                      
                             $duplicateSkuCodeyCheck = Blog::select('id','sku_code')->where('sku_code',$skuCode[0])->count();
 
+                            $save_name = time()."image1.jpg";                          
+
+                            $save_directory = "uploads/";    
+                            if(is_writable($save_directory)) {
+                                file_put_contents($save_directory . $save_name, file_get_contents($imageLink));
+                            }else {
+                                echo "error";
+                            } 
 
                             if($duplicateSkuCodeyCheck == 0){
 
-                                $save_name = time()."image1.jpg";
-
-                          
-
-                                $save_directory = "uploads/";    
-                                if(is_writable($save_directory)) {
-                                    file_put_contents($save_directory . $save_name, file_get_contents($imageLink));
-                                }else {
-                                    echo "error";
-                                } 
+                              
 
                                 $product = new Blog([
                                     "tittle"=>$title,
                                     "description"=>$description,
                                     "image"=>"uploads/".$save_name,                                   
                                     "name"=>$title,
+                                    "is_variation" => "1",
                                     'sku_code'=>$skuCode[0],
                                     'categary_id'=>$request->categary_id,
                                     'slug_name'=>$slug   
@@ -137,7 +136,9 @@ class CsvProductController extends Controller
                                         'amount' => $amount,
                                         'discount_percentage'=> 0,
                                         'discount_amt' =>0.00,
-                                        'final_price' =>$amount
+                                        'final_price' =>$amount,
+                                        'carat' => $carat,
+                                        "image"=>"uploads/".$save_name,
                                     ]);                                 
 
                                 }
@@ -147,13 +148,15 @@ class CsvProductController extends Controller
                                 $productDetails = Blog::where(['sku_code'=> $skuCode[0]])->first();
 
                                 $ropeChain = Rope_chain::create([         
-                                    'name' =>$variationName,
+                                    'name' =>$variationName?$variationName:'N/A',
                                     'blog_id' =>$productDetails -> id,
-                                    'gold_color' => $color,
+                                    'gold_color' => $color?$color:'N/A',
                                     'amount' => $amount,
                                     'discount_percentage'=> 0,
                                     'discount_amt' =>0.00,
-                                    'final_price' =>$amount
+                                    'final_price' =>$amount,
+                                    'carat' => $carat?$carat:'N/A',
+                                    "image"=>"uploads/".$save_name,
                                 ]); 
 
                                
@@ -180,6 +183,7 @@ class CsvProductController extends Controller
                     // Session::flash('message','Import Successful.');
 
             }else{
+                die;
                 return Redirect::to('/author/product')-> with('errmsg',"File must be CSV")->withInput($request->all);
             }
         }

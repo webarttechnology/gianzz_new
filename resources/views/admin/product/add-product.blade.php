@@ -75,7 +75,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-6 col-xs-6">
                                             <div class="form-group">
                                             <input type="checkbox" id="is_variation" name="is_variation" value="0" onchange="varidationornot()">
@@ -83,41 +83,31 @@
                                               
                                             </div>
                                         </div>
-                            </div>
-
-                            <!-- <div class="row">
-                                <div class="col-md-6 col-xs-6 amt">
-                                            <div class="form-group">
-                                                <label>Amount :<span style="color:red"> *</span></label>
-                                                <input type="number" name="p_amt" id="p_amt" class="form-control" placeholder="Amount" value="{{ old('p_amt') }}" >
-                                                @if ($errors->has('p_amt'))
-                                                                        <span class="text-danger">{{ $errors->first('p_amt') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
                             </div> -->
+
+                         
 
                         
                             <div class="row ">
                                 <div class="col-md-2 col-xs-12">
                                     <div class="form-group">
-                                        <label>Rope Chain :<span style="color:red"> *</span></label>
+                                        <label>Variation</label>
                                         <input type="text" name="ropeChain[]" id="ropeChain" class="form-control" placeholder="0.68 Mm Thickness 18 Inch" value=""  />
+                                       
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-12">
+                                    <div class="form-group">
+                                        <label>Size</label>
+                                        <input type="text" name="carat[]" id="carat" class="form-control" placeholder="Ex 14k" value="{{ old('carat') }}"  />
                                        
                                        
                                     </div>
                                 </div>
                                 <div class="col-md-1 col-xs-12">
                                     <div class="form-group">
-                                        <label>karat :<span style="color:red"> *</span></label>
-                                        <input type="text" name="carat[]" id="carat" class="form-control" placeholder="Ex 14k" value="{{ old('carat') }}"  />
-                                       
-                                       
-                                    </div>
-                                </div>
-                                <div class="col-md-2 col-xs-12">
-                                    <div class="form-group">
-                                        <label>Amount :<span style="color:red"> *</span></label>
+                                        <label>Amount</label>
                                         <input type="num" name="amount[]" id="amount1" class="form-control" placeholder="Amount" onkeyup="getdiscountprice(1)" value="{{ old('amount') }}"  />  
                                         @if ($errors->has('amount'))
                                                 <span class="text-danger">{{ $errors->first('amount') }}</span>
@@ -127,7 +117,7 @@
 
                                 <div class="col-md-1 col-xs-12">
                                     <div class="form-group">
-                                        <label>Color :<span style="color:red"> *</span></label>
+                                        <label>Color</label>
                                         <input type="text" name="gold_color[]" id="gold_color" class="form-control" placeholder="Color" value="{{ old('gold_color') }}"  /> 
                                         @if ($errors->has('gold_color'))
                                                                 <span class="text-danger">{{ $errors->first('gold_color') }}</span>
@@ -135,9 +125,9 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 col-xs-12">
+                                <div class="col-md-1 col-xs-12">
                                     <div class="form-group">
-                                        <label>Discount% :<span style="color:red"> *</span></label>
+                                        <label>Discount%</label>
                                         <input type="num" name="discount_percentage[]" id="discount_percentage1" class="form-control" placeholder="Discount Percentage" onkeyup="getdiscountprice(1)" value="{{ old('discount_percentage') }}"  /> 
                                         @if ($errors->has('discount_percentage'))
                                                                 <span class="text-danger">{{ $errors->first('discount_percentage') }}</span>
@@ -145,14 +135,21 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 col-xs-12">
+                                <div class="col-md-1 col-xs-12">
                                     <div class="form-group">
-                                        <label>Final Price :<span style="color:red"> *</span></label>
+                                        <label>Final Price</label>
                                         <input type="num" name="final_price[]" id="final_price1" class="form-control" placeholder="Final Price" value="{{ old('final_price') }}" /> 
                                         <input type="hidden" name="discount_amt[]" id="discount_amt1" class="form-control" placeholder="Final Price" value="{{ old('discount_amt') }}" /> 
                                         @if ($errors->has('final_price'))
-                                                                <span class="text-danger">{{ $errors->first('final_price') }}</span>
+                                        <span class="text-danger">{{ $errors->first('final_price') }}</span>
                                         @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 col-xs-12">
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <input type="file" name="otherimage[]" id="otherimage" class="form-control"/>                                       
                                     </div>
                                 </div>
 
@@ -169,7 +166,7 @@
                                         <label>SKU Code :<span style="color:red"> *</span></label>
                                         <input type="text" name="sku_code" id="sku_code" class="form-control" placeholder="SKU Code" value="{{ old('sku_code') }}" />
                                         @if ($errors->has('sku_code'))
-                                                                <span class="text-danger">{{ $errors->first('sku_code') }}</span>
+                                        <span class="text-danger">{{ $errors->first('sku_code') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -182,7 +179,7 @@
                                         <label>Description :<span style="color:red"> *</span></label>
                                         <textarea type="text" name="description" id="description" class="form-control"placeholder="categary Name" >{{ old('description') }}</textarea>
                                         @if ($errors->has('description'))
-                                                                <span class="text-danger">{{ $errors->first('description') }}</span>
+                                         <span class="text-danger">{{ $errors->first('description') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -192,41 +189,15 @@
                                 <div class="col-md-12 col-xs-6">
                                     <div class="form-group">
                                         <label>Image1 :<span style="color:red"> *</span></label>
-                                        <input type="file" name="image" id="image" class="form-control" onchange="multipleimage1()" />
+                                        <input type="file" name="image" id="image" class="form-control" />
                                         @if ($errors->has('image'))
-                                                                <span class="text-danger">{{ $errors->first('image') }}</span>
+                                        <span class="text-danger">{{ $errors->first('image') }}</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row" style="display:none" id="mulimage1">
-                                <div class="col-md-12 col-xs-6">
-                                    <div class="form-group">
-                                        <label>Image2 :</label>
-                                        <input type="file" name="image1" id="image1" class="form-control" onchange="multipleimage2()" />
-                                        
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row" style="display:none" id="mulimage2">
-                                <div class="col-md-12 col-xs-6">
-                                    <div class="form-group">
-                                        <label>Image3 :</label>
-                                        <input type="file" name="image2" id="image2" class="form-control"  onchange="multipleimage3()"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row" style="display:none" id="mulimage3">
-                                <div class="col-md-12 col-xs-6">
-                                    <div class="form-group">
-                                        <label>Image4 :</label>
-                                        <input type="file" name="image3" id="image3" class="form-control"  />
-                                    </div>
-                                </div>
-                            </div>
+                        
 
                             <div class="row" >
                                 <div class="col-md-12 col-xs-6">
@@ -260,14 +231,11 @@
 CKEDITOR.replace( 'description' );
 
 $(document).ready(function () {
-                $(".rope-chan").hide();
                 
                 let lineNo = 2;
-                $("#addrow").click(function () {
-                   
-                    markup = '<div class="row"   id="deleterow'+ lineNo +'"><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="ropeChain[]" id="ropeChain'+ lineNo +'"  placeholder="0.68 Mm Thickness 18 Inch" style="width: 100%;"></div></div><div class="col-md-1 col-xs-12"><div class="form-group"><input type="text" name="carat[]" id="carat'+ lineNo +'" class="form-control" placeholder="Ex 14k"  /></div></div><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="amount[]" id="amount'+ lineNo +'"  placeholder="Amount" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-1 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="gold_color[]" id="gold_color'+ lineNo +'"  placeholder="Color" style="width: 100%;"></div></div> <div class="col-md-2 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="discount_percentage[]" id="discount_percentage'+ lineNo +'"  placeholder="Discount Percentage" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="final_price[]" id="final_price'+ lineNo +'"  placeholder="Final Price" style="width: 100%;" ><input type="hidden" name="discount_amt[]" id="discount_amt'+lineNo+'" class="form-control"  /> </div></div><div class="fv-plugins-message-container d-inline-block"> <button class="btn btn-danger m-b-5 ml-2 py-2"  onclick="deleteRow('+ lineNo +')"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div></div>' ;
+                $("#addrow").click(function () {                   
+                    markup = '<div class="row"   id="deleterow'+ lineNo +'"><div class="col-md-2 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="ropeChain[]" id="ropeChain'+ lineNo +'"  placeholder="0.68 Mm Thickness 18 Inch" style="width: 100%;"></div></div><div class="col-md-2 col-xs-12"><div class="form-group"><input type="text" name="carat[]" id="carat'+ lineNo +'" class="form-control" placeholder="Ex 14k"  /></div></div><div class="col-md-1 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="amount[]" id="amount'+ lineNo +'"  placeholder="Amount" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-1 col-xs-12" ><div class="form-group"><input type="text" class="d-inline-block form-control"  name="gold_color[]" id="gold_color'+ lineNo +'"  placeholder="Color" style="width: 100%;"></div></div> <div class="col-md-1 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="discount_percentage[]" id="discount_percentage'+ lineNo +'"  placeholder="Discount Percentage" style="width: 100%;" onkeyup="getdiscountprice('+lineNo+')"></div></div><div class="col-md-1 col-xs-12" ><div class="form-group"><input type="num" class="d-inline-block form-control"  name="final_price[]" id="final_price'+ lineNo +'"  placeholder="Final Price" style="width: 100%;" ><input type="hidden" name="discount_amt[]" id="discount_amt'+lineNo+'" class="form-control"  /> </div></div><div class="col-md-2 col-xs-12"><div class="form-group"><input type="file" name="otherimage[]" id="otherimage" class="form-control"/></div></div><div class="fv-plugins-message-container d-inline-block"> <button class="btn btn-danger m-b-5 ml-2 py-2"  onclick="deleteRow('+ lineNo +')"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div></div>' ;
                     tableBody = $("#multipleimage");
-                   // alert(tableBody);
                     tableBody.append(markup);
                     lineNo++;
                 });
@@ -344,15 +312,7 @@ function getSubCategary(){
             //     $("#p_amt").focus();
             //     return false;
             // }
-            else if ($("#ropeChain").val() == '') {
-                $("#errmsg").html("Please Enter Rope Chain Option !!");
-                $("#ropeChain").focus();
-                return false;
-            }else if ($("#carat").val() == '') {
-                $("#errmsg").html("Please Enter Karat !!");
-                $("#carat").focus();
-                return false;
-            }else if ( $("#amount1").val() == '') {
+            if ( $("#amount1").val() == '') {
                 $("#errmsg").html("Please Enter Amount!!");
                 $("#amount1").focus();
                 return false;
@@ -372,11 +332,7 @@ function getSubCategary(){
                 $("#errmsg").html("Please Enter SKU Code!!");
                 //$("#email").css("border-color", "red");
                 return false;
-            } else if ($("#description").val() == '') {
-                $("#errmsg").html("Please Enter A Descriptuon!!");
-                //$("#email").css("border-color", "red");
-                return false;
-            } 
+            }
             else if ($("#image").val() == '') {
                 $("#errmsg").html("Please Upload a Picture!!");
                 //$("#email").css("border-color", "red");
@@ -407,48 +363,20 @@ function getSubCategary(){
         }
 
 
-    function multipleimage1(){
-        if($("#image").val() != ''){
-         //   alert($("#image").val());
-            $('#mulimage1').show();
-            return false;
-        }if($("#image1").val() != ''){
-            alert($("#image1").val());
-            $('#mulimage2').show();
-            return false;
-        }
-    }
 
 
-    function multipleimage2(){
-        if($("#image1").val() != ''){
-           // alert($("#image1").val());
-            $('#mulimage2').show();
-            return false;
-        } 
-    }
+    // function varidationornot(){
+    //     if($("#is_variation").is(":checked") == true){
+    //         $(".rope-chan").show();
+    //         $(".amt").hide();
+    //         $("#is_variation").val(1);
+    //     }else{
+    //         $(".rope-chan").hide();
+    //         $(".amt").show();
+    //         $("#is_variation").val(0);
+    //     }
 
-
-    function multipleimage3(){
-        if($("#image2").val() != ''){
-           // alert($("#image1").val());
-            $('#mulimage3').show();
-            return false;
-        } 
-    }
-
-    function varidationornot(){
-        if($("#is_variation").is(":checked") == true){
-            $(".rope-chan").show();
-            $(".amt").hide();
-            $("#is_variation").val(1);
-        }else{
-            $(".rope-chan").hide();
-            $(".amt").show();
-            $("#is_variation").val(0);
-        }
-
-    }
+    // }
 
 
    

@@ -27,10 +27,7 @@ class ProductController extends Controller
             $categary = Categary::get();
             $sub_categary = Subcategary::get();
             $rope_chain =Rope_chain::get();
-                // echo "<pre/>";
-                // print_r($data);die;
-
-             
+                     
                 $newArray =[];
                foreach($data as $d){
                 
@@ -68,17 +65,15 @@ class ProductController extends Controller
             $sub_categary = Subcategary::get();
            return view('admin/product/add-product',['title' =>"Product",'categary' => $categary, 'subCategary' => $sub_categary,]);
        }else if($request -> method() == "POST"){
+
              $chain = $request->post('ropeChain');
              $amount =$request->post('amount');
              $color =$request->post('gold_color');
              $finalprice =$request->post('final_price');
              $dicountPercentage =$request->post('discount_percentage');
              $carat =$request->post('carat');
-             //print_r($amount);die;
              $discountamount=$request->post('discount_amt');
-            // print_r($request->post());die;
-
-           $is_variation =$request->is_variation?$request->is_variation:"0";
+             $is_variation = "1";
 
            //echo $is_variation;die;
             $request->validate([
@@ -95,7 +90,8 @@ class ProductController extends Controller
            ]);
 
           
-           $duplicateProductyCheck = Blog::where('name',$request->name)->where('id','!=',$request->id)->count();
+           $duplicateProductyCheck = Blog::where('sku_code', $request->sku_code)->where('id','!=',$request->id)->count();
+         
            if($duplicateProductyCheck == 0){
                 $slug = Str::slug($request->name, '-');
                 $categary = Blog::create([
@@ -104,7 +100,7 @@ class ProductController extends Controller
                     'subcategary_id' =>$request->subcategary_id,
                     'name' =>$request->name,
                     'description' =>$request->description,
-                    'slug_name' =>$slug,
+                    'slug_name' =>$slug.'-'.$request->sku_code,
                     'sku_code' =>$request->sku_code,
                     'is_variation'=>$is_variation,
                     'image' => 1
@@ -114,18 +110,31 @@ class ProductController extends Controller
 
                 if($is_variation == 1){
                     foreach($chain as $key => $val){
-                        //echo $val. '-'. $amount[$key]. '-'.$color[$key]. '</br>';
+                        if($_FILES['otherimage']['name'][$key] != ""){
+                            $file = $request->file('otherimage')[$key];
+                            $name = $file->getClientOriginalName();
+                            $path = "uploads/";
+                            $file->move($path, $name.$key.time().'.'.$file->getClientOriginalExtension());
+                            $image_name = $path. $name.$key.time().'.'.$file->getClientOriginalExtension();
+                        }else{
+                            $image_name = "";
+                        }
+
+
                         $ropeChain = Rope_chain::create([         
-                        'name' =>$val,
+                        'name' =>$val?$val:'',
                         'blog_id' =>$categary->id,
-                        'gold_color' =>$color[$key],
-                        'amount' =>$amount[$key],
-                        'discount_percentage'=>$dicountPercentage[$key],
-                        'discount_amt' =>$discountamount[$key],
-                        'final_price' =>$finalprice[$key],
-                        'carat' =>$carat[$key]
+                        'gold_color' =>$color[$key]?$color[$key]:'N/A',
+                        'amount' =>$amount[$key]?$amount[$key]:'',
+                        'discount_percentage'=>$dicountPercentage[$key]?$dicountPercentage[$key]:'',
+                        'discount_amt' =>$discountamount[$key]?$discountamount[$key]:'',
+                        'final_price' =>$finalprice[$key]?$finalprice[$key]:'',
+                        'carat' =>$carat[$key]?$carat[$key]:'N/A',
+                        'image' => $image_name
                         ]);
                     }
+
+                
                 }else{
                     $ropeChain = Blog::where('id', $categary->id)->update([
                         'p_amt' => $amount[0],
@@ -149,38 +158,7 @@ class ProductController extends Controller
                     'image' => $image_name
                 ]);
 
-                if($request->hasFile('image1')){                 
-                    $file2 = $request->file('image1');
-                    $name = $file2->getClientOriginalName();
-                    $path = "uploads/";
-                    $file2->move($path, $lastId.$name."image2");
-
-                    $image_name1 = $path.$lastId.$name."image2";
-                    $update_image = Blog::where('id',$lastId)->update([
-                        'image1'  =>$image_name1,
-                    ]);
-                    
-                    }if($request->hasFile('image2')){              
-                            $file3 = $request->file('image2');
-                            $name = $file3->getClientOriginalName();
-                            $path = "uploads/";
-                            $file3->move($path, $lastId.$name."image3");
-
-                            $image_name2 = $path.$lastId.$name."image3";
-                            $update_image = Blog::where('id',$lastId)->update([
-                                'image2'  =>$image_name2,
-                            ]);
-                            }if($request->hasFile('image3')){              
-                                $file4 = $request->file('image3');
-                                $name = $file4->getClientOriginalName();
-                                $path = "uploads/";
-                                $file4->move($path, $lastId.$name."image4");
-                
-                                $image_name4 = $path.$lastId.$name."image4";
-                                $update_image = Blog::where('id',$lastId)->update([
-                                    'image3'  =>$image_name4,
-                                ]);
-                    }if($request->hasFile('image4')){              
+                if($request->hasFile('image4')){              
                         $file5 = $request->file('image4');
                         $name = $file5->getClientOriginalName();
                         $path = "uploads/";
@@ -190,19 +168,114 @@ class ProductController extends Controller
                         $update_image = Blog::where('id',$lastId)->update([
                             'image4'  =>$image_name5,
                         ]);
-                    }
+                }
+
+
                 if($update_image && $categary){
                     return Redirect::to('/author/product')-> with('successmsg',Config::get('constants.ADD_SUCCESS'));
                 }else{
                     return Redirect::to('/author/product')-> with('errmsg',Config::get('constants.ADD_ERROR'))->withInput($request->all);
                 }
            }else{
-            return Redirect::to('/author/product/add')-> with('errmsg',"Already Exist This Product")->withInput($request->all);
+            return Redirect::to('/author/product/add')-> with('errmsg',"Already Exist This Product");
            }
        }
     }
 
-  public function update(Request $request , $id = ''){    
+
+  public function update(Request $request, $id = ''){
+        if($request -> method() == "GET" || $id != ''){
+            $data = Blog ::find($id);
+            $categary = Categary::get();
+            $rope = Rope_chain::where('blog_id',$id)->get();
+            $lastrope_id = Rope_chain::orderBy('id', 'desc')->where('blog_id',$id)->first();
+           // echo "blog_id". $lastrope_id->blog_id ."-".$lastrope_id->id;die;
+            $subcategary = Subcategary::where('categary_id', $data ->categary_id) ->get();
+            return view('admin/product/update-product',['blog' => $data,'rope'=>$rope,'lastrope_id'=>$lastrope_id->id,'categary' => $categary, 'subcategary' => $subcategary,'title' =>"Product"]);
+       
+        }else{
+            $id= $request->post('id');
+            $is_variation =$request->is_variation?$request->is_variation:"0";
+            $request->validate([
+                'tittle'  =>'required',
+                'categary_id'  =>'required',
+                'description'  =>'required', 
+                'name' =>'required',
+                'amount' =>'required', 
+                'gold_color' =>'required', 
+                'discount_percentage' =>'required', 
+                'sku_code' =>'required'
+ 
+            ]);
+
+            $duplicateProductyCheck = Blog::where('sku_code',$request->sku_code)->where('id','!=',$request->id)->count();
+
+            if($duplicateProductyCheck == 0) {
+
+                $slug = Str::slug($request->name, '-').'-'.$request -> sku_code; 
+
+                $updateDate = [
+                    'tittle' =>$request->tittle,
+                    'categary_id' =>$request->categary_id,
+                    'subcategary_id' =>$request->subcategary_id,
+                    'name' =>$request->name,
+                    'description' =>$request->description,
+                    'slug_name' =>$slug,
+                    'sku_code' =>$request->sku_code,
+                ];
+
+             
+
+
+                if($request -> hasFile('image') != ''){
+                $file = $request->file('image');
+                $name = $file->getClientOriginalName();
+                $path = "uploads/";
+                $file->move($path, $path.time().'.'.$file->getClientOriginalExtension());
+                $updateDate['image'] = $path.time().'.'.$file->getClientOriginalExtension();
+                }
+
+               
+                $update = Blog::where('id', $request->id)->update($updateDate);
+               
+
+                $variation = $request->post('ropeChain');
+
+               
+                for($i=0; $i<count($variation); $i++){
+                    $updateVariationData = [
+                        'name' =>$request->post('ropeChain')[$i]?$request->post('ropeChain')[$i]:'',
+                        'gold_color' =>$request->post('gold_color')[$i]?$request->post('gold_color')[$i]:'N/A',
+                        'amount' =>$request->post('amount')[$i]?$request->post('amount')[$i]:'',
+                        'discount_percentage'=>$request->post('discount_percentage')[$i]?$request->post('discount_percentage')[$i]:'',
+                        'discount_amt' =>$request->post('discount_amt')[$i]?$request->post('discount_amt')[$i]:'',
+                        'final_price' =>$request->post('final_price')[$i]?$request->post('final_price')[$i]:'',
+                        'carat' =>$request->post('carat')[$i]?$request->post('carat')[$i]:'N/A',
+                    ];
+
+                    if($_FILES['otherimage']['name'][$i] != ""){
+                        $file = $request->file('otherimage')[$i];
+                        $name = $file->getClientOriginalName();
+                        $path = "uploads/";
+                        $file->move($path, $path.$i.time().'.'.$file->getClientOriginalExtension());
+                        $updateVariationData['image'] = $path.$i.time().'.'.$file->getClientOriginalExtension();
+                    }
+
+                    $ropeChain = Rope_chain::where('id',$request ->rope_id[$i])->update($updateVariationData);
+                }
+
+               
+                return Redirect::to('/author/product')-> with('successmsg',Config::get('constants.UPDATE_SUCCESS'));
+
+
+            }else{
+                return Redirect::to('/author/product/upate/'.$request->id)-> with('errmsg',"Already Exist This Product")->withInput($request->all);   
+            }
+
+        }
+  }
+
+  public function update_bk(Request $request , $id = ''){    
        if($request ->method() == 'GET' || $id != '' ){
            $data = Blog ::find($id);
            $categary = Categary::get();
@@ -214,14 +287,12 @@ class ProductController extends Controller
        }else if ($request -> method() == "POST"){
           $id= $request->post('id');
 
-         // print_r($request->post());die;
           $is_variation =$request->is_variation?$request->is_variation:"0";
             $request->validate([
                 'tittle'  =>'required',
                 'categary_id'  =>'required',
                 'description'  =>'required', 
                 'name' =>'required',
-                'ropeChain' =>'required',
                 'amount' =>'required', 
                 'gold_color' =>'required', 
                 'discount_percentage' =>'required', 

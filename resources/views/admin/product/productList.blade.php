@@ -39,7 +39,7 @@
                                     <th width="15%">Final Price</th>
                                     <th width="15%">Discount Amount</th>    
                                     <th width="15%">Image</th>  
-                                    <th width="15%">Image2</th>                           
+                                    <th width="15%">Video</th>                           
                                     <th width="15%">Status</th>
                                     <th width="5%">Action</th>
                                 </tr>
@@ -102,8 +102,7 @@
 						<li class="page-item"><a class="{{ $selectedPage == $i?'page-link bg-theme-red text-white':'page-link text-theme-red'}}" href="{{ url($fullurl.'?page='.$i) }}">{{ $i }}</a></li>
 						@endfor					
 
-						
-						
+											
 						<li class="page-item">
 						@if(round($maxCount) > $errorNo)	
 						<a class="page-link text-theme-red" href="{{ url($fullurl.'?page='.++$errorNo) }}" aria-label="Next">
@@ -231,7 +230,6 @@ CKEDITOR.replace( 'description' );
 
     function multipleimage2(){
         if($("#image1").val() != ''){
-           // alert($("#image1").val());
             $('#mulimage2').show();
             return false;
         } 

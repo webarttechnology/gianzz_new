@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','tittle','description','is_variation','p_amt','image','is_active','categary_id','subcategary_id','image1','image2','image3','image4','name','slug_name','sku_code','gold_color','discount_percentage','discount_amt','carat'];
+    protected $fillable = ['name','tittle','description','is_variation','p_amt','image','is_active','categary_id','subcategary_id','image4','name','slug_name','sku_code','gold_color','discount_percentage','discount_amt','carat'];
     
     public function categary(){
     	return $this->belongsTo(Categary::class);
